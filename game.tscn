@@ -1,10 +1,86 @@
-[gd_scene format=3 uid="uid://c1ohwwaoriof5"]
+[gd_scene load_steps=5 format=3 uid="uid://c1ohwwaoriof5"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_yth4k"]
+b = Vector2(1920, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_x85t6"]
+a = Vector2(0, 1080)
+b = Vector2(1920, 1080)
+
+[sub_resource type="Gradient" id="Gradient_op4ot"]
+offsets = PackedFloat32Array(0.902153, 0.998043)
+colors = PackedColorArray(0.0392157, 0.0392157, 0.0392157, 1, 0.0392157, 0.0392157, 0.0392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_a3ybt"]
+gradient = SubResource("Gradient_op4ot")
+width = 1920
+height = 1080
 
 [node name="Game" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="Paddle1" type="CharacterBody2D" parent="."]
 disable_mode = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Paddle1"]
+position = Vector2(31.75, 19.75)
+scale = Vector2(64.5, 40.5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle1"]
+
+[node name="Walls" type="Area2D" parent="."]
+
+[node name="Top" type="CollisionShape2D" parent="Walls"]
+shape = SubResource("SegmentShape2D_yth4k")
+
+[node name="Bottom" type="CollisionShape2D" parent="Walls"]
+shape = SubResource("SegmentShape2D_x85t6")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_a3ybt")
+metadata/_edit_use_anchors_ = true
+
+[node name="ScoreLeft" type="Label" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.367
+anchor_top = -0.007
+anchor_right = 0.409
+anchor_bottom = 0.175
+offset_left = -0.640015
+offset_top = -0.44
+offset_right = 0.719971
+offset_bottom = -1.52588e-05
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 144
+text = "0"
+metadata/_edit_use_anchors_ = true
+
+[node name="ScoreRight" type="Label" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.592
+anchor_top = -0.007
+anchor_right = 0.634
+anchor_bottom = 0.175
+offset_left = -0.640015
+offset_top = -0.44
+offset_right = 0.719971
+offset_bottom = -1.52588e-05
+theme_override_font_sizes/font_size = 144
+text = "0"
+metadata/_edit_use_anchors_ = true
+
+[node name="Paddle2" type="CharacterBody2D" parent="."]
+disable_mode = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Paddle2"]
+position = Vector2(31.75, 19.75)
+scale = Vector2(64.5, 40.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle2"]
