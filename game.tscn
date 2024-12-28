@@ -31,16 +31,15 @@ b = Vector2(1920, 1080)
 [node name="Game" type="Node2D"]
 
 [node name="Ball" type="CharacterBody2D" parent="."]
+position = Vector2(960, 540)
 script = ExtResource("1_y7h46")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Ball"]
-position = Vector2(960, 544)
 texture = ExtResource("1_ob8rm")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
-position = Vector2(960, 544)
 shape = SubResource("CircleShape2D_8c1jb")
 metadata/_edit_group_ = true
 
@@ -63,7 +62,7 @@ one_way_collision_margin = 0.0
 metadata/_edit_group_ = true
 
 [node name="Paddle2" type="CharacterBody2D" parent="."]
-position = Vector2(1710, 544)
+position = Vector2(1744, 544)
 scale = Vector2(1.2, 1.8)
 disable_mode = 1
 input_pickable = true
