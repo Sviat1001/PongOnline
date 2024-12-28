@@ -1,16 +1,22 @@
-[gd_scene load_steps=12 format=3 uid="uid://c1ohwwaoriof5"]
+[gd_scene load_steps=11 format=3 uid="uid://c1ohwwaoriof5"]
 
 [ext_resource type="Texture2D" uid="uid://c1htev0wpitr2" path="res://paddle.svg" id="1_1oc1r"]
-[ext_resource type="Texture2D" uid="uid://qyijt77q3saw" path="res://ball.svg" id="1_ob8rm"]
 [ext_resource type="Script" path="res://ball.gd" id="1_y7h46"]
-[ext_resource type="Script" path="res://paddle_left.gd" id="1_yi06h"]
-[ext_resource type="Script" path="res://paddle_right.gd" id="3_yj0hh"]
+[ext_resource type="Texture2D" uid="uid://cgy83318viik7" path="res://ball.png" id="2_kncsl"]
+[ext_resource type="Script" path="res://paddle.gd" id="3_yj0hh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8c1jb"]
 radius = 16.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_32kk5"]
 size = Vector2(21.3333, 133.333)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_fjnlx"]
+b = Vector2(1920, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_5kdyp"]
+a = Vector2(0, 1080)
+b = Vector2(1920, 1080)
 
 [sub_resource type="Gradient" id="Gradient_op4ot"]
 offsets = PackedFloat32Array(0.902153, 0.998043)
@@ -21,22 +27,17 @@ gradient = SubResource("Gradient_op4ot")
 width = 1920
 height = 1080
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_fjnlx"]
-b = Vector2(1920, 0)
-
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_5kdyp"]
-a = Vector2(0, 1080)
-b = Vector2(1920, 1080)
-
 [node name="Game" type="Node2D"]
 
 [node name="Ball" type="CharacterBody2D" parent="."]
 position = Vector2(960, 540)
+scale = Vector2(1.2, 1.2)
 script = ExtResource("1_y7h46")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Ball"]
-texture = ExtResource("1_ob8rm")
+scale = Vector2(0.131, 0.131)
+texture = ExtResource("2_kncsl")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
@@ -48,7 +49,7 @@ position = Vector2(210, 544)
 scale = Vector2(1.2, 1.8)
 disable_mode = 1
 input_pickable = true
-script = ExtResource("1_yi06h")
+script = ExtResource("3_yj0hh")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Paddle1"]
@@ -62,7 +63,7 @@ one_way_collision_margin = 0.0
 metadata/_edit_group_ = true
 
 [node name="Paddle2" type="CharacterBody2D" parent="."]
-position = Vector2(1744, 544)
+position = Vector2(1710, 544)
 scale = Vector2(1.2, 1.8)
 disable_mode = 1
 input_pickable = true
@@ -80,6 +81,14 @@ shape = SubResource("RectangleShape2D_32kk5")
 one_way_collision_margin = 0.0
 metadata/_edit_group_ = true
 
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="Top" type="CollisionShape2D" parent="Walls"]
+shape = SubResource("SegmentShape2D_fjnlx")
+
+[node name="Bottom" type="CollisionShape2D" parent="Walls"]
+shape = SubResource("SegmentShape2D_5kdyp")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
 
@@ -94,7 +103,7 @@ metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
 [node name="ScoreLeft" type="Label" parent="CanvasLayer"]
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 704.0
@@ -107,7 +116,7 @@ text = "0"
 metadata/_edit_use_anchors_ = true
 
 [node name="ScoreRight" type="Label" parent="CanvasLayer"]
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 1136.0
@@ -117,11 +126,3 @@ offset_bottom = -891.0
 theme_override_font_sizes/font_size = 144
 text = "0"
 metadata/_edit_use_anchors_ = true
-
-[node name="Walls" type="StaticBody2D" parent="."]
-
-[node name="Top" type="CollisionShape2D" parent="Walls"]
-shape = SubResource("SegmentShape2D_fjnlx")
-
-[node name="Bottom" type="CollisionShape2D" parent="Walls"]
-shape = SubResource("SegmentShape2D_5kdyp")
