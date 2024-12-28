@@ -1,11 +1,11 @@
 extends CharacterBody2D
 
-const SPEED = 800.0
+const SPEED = 900.0
 var paddle_num = str
 
 func _ready():
 	paddle_num = name.replace("Paddle", "")
 	
-func _physics_process(_delta):
+func _physics_process(delta):
 	velocity.y = Input.get_axis("move_up_p%s" % paddle_num, "move_down_p%s" % paddle_num) * SPEED
-	move_and_slide()
+	move_and_collide(velocity * delta)
