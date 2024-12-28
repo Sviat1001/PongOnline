@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://c1ohwwaoriof5"]
+[gd_scene load_steps=9 format=3 uid="uid://c1ohwwaoriof5"]
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_yth4k"]
-b = Vector2(1920, 0)
+[ext_resource type="Texture2D" uid="uid://c1htev0wpitr2" path="res://paddle.svg" id="1_1oc1r"]
+[ext_resource type="Script" path="res://paddle_left.gd" id="1_yi06h"]
+[ext_resource type="Script" path="res://paddle_right.gd" id="3_yj0hh"]
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_x85t6"]
-a = Vector2(0, 1080)
-b = Vector2(1920, 1080)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_32kk5"]
+size = Vector2(21.3333, 133.333)
 
 [sub_resource type="Gradient" id="Gradient_op4ot"]
 offsets = PackedFloat32Array(0.902153, 0.998043)
@@ -16,47 +16,74 @@ gradient = SubResource("Gradient_op4ot")
 width = 1920
 height = 1080
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_fjnlx"]
+b = Vector2(1920, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_5kdyp"]
+a = Vector2(0, 1080)
+b = Vector2(1920, 1080)
+
 [node name="Game" type="Node2D"]
 
 [node name="Paddle1" type="CharacterBody2D" parent="."]
+position = Vector2(210, 540)
+scale = Vector2(1.5, 1.8)
 disable_mode = 1
+input_pickable = true
+script = ExtResource("1_yi06h")
+metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Paddle1"]
-position = Vector2(31.75, 19.75)
-scale = Vector2(64.5, 40.5)
+position = Vector2(-3.18885e-06, 8.70228e-06)
+scale = Vector2(2.66667, 1.96078)
+texture = ExtResource("1_1oc1r")
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle1"]
+shape = SubResource("RectangleShape2D_32kk5")
+one_way_collision_margin = 0.0
+metadata/_edit_group_ = true
 
-[node name="Walls" type="Area2D" parent="."]
+[node name="Paddle2" type="CharacterBody2D" parent="."]
+position = Vector2(1710, 540)
+scale = Vector2(1.5, 1.8)
+disable_mode = 1
+input_pickable = true
+script = ExtResource("3_yj0hh")
+metadata/_edit_group_ = true
 
-[node name="Top" type="CollisionShape2D" parent="Walls"]
-shape = SubResource("SegmentShape2D_yth4k")
+[node name="Sprite2D" type="Sprite2D" parent="Paddle2"]
+position = Vector2(-3.18885e-06, 8.70228e-06)
+scale = Vector2(2.66667, 1.96078)
+texture = ExtResource("1_1oc1r")
+metadata/_edit_group_ = true
 
-[node name="Bottom" type="CollisionShape2D" parent="Walls"]
-shape = SubResource("SegmentShape2D_x85t6")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle2"]
+shape = SubResource("RectangleShape2D_32kk5")
+one_way_collision_margin = 0.0
+metadata/_edit_group_ = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_a3ybt")
 metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
 
 [node name="ScoreLeft" type="Label" parent="CanvasLayer"]
 anchors_preset = -1
-anchor_left = 0.367
-anchor_top = -0.007
-anchor_right = 0.409
-anchor_bottom = 0.175
-offset_left = -0.640015
-offset_top = -0.44
-offset_right = 0.719971
-offset_bottom = -1.52588e-05
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 704.0
+offset_top = -8.0
+offset_right = -1134.0
+offset_bottom = -891.0
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 144
 text = "0"
@@ -64,23 +91,20 @@ metadata/_edit_use_anchors_ = true
 
 [node name="ScoreRight" type="Label" parent="CanvasLayer"]
 anchors_preset = -1
-anchor_left = 0.592
-anchor_top = -0.007
-anchor_right = 0.634
-anchor_bottom = 0.175
-offset_left = -0.640015
-offset_top = -0.44
-offset_right = 0.719971
-offset_bottom = -1.52588e-05
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1136.0
+offset_top = -8.0
+offset_right = -702.0
+offset_bottom = -891.0
 theme_override_font_sizes/font_size = 144
 text = "0"
 metadata/_edit_use_anchors_ = true
 
-[node name="Paddle2" type="CharacterBody2D" parent="."]
-disable_mode = 1
+[node name="Walls" type="StaticBody2D" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="Paddle2"]
-position = Vector2(31.75, 19.75)
-scale = Vector2(64.5, 40.5)
+[node name="Top" type="CollisionShape2D" parent="Walls"]
+shape = SubResource("SegmentShape2D_fjnlx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle2"]
+[node name="Bottom" type="CollisionShape2D" parent="Walls"]
+shape = SubResource("SegmentShape2D_5kdyp")
