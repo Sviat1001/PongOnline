@@ -1,8 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://c1ohwwaoriof5"]
+[gd_scene load_steps=12 format=3 uid="uid://c1ohwwaoriof5"]
 
 [ext_resource type="Texture2D" uid="uid://c1htev0wpitr2" path="res://paddle.svg" id="1_1oc1r"]
+[ext_resource type="Texture2D" uid="uid://qyijt77q3saw" path="res://ball.svg" id="1_ob8rm"]
+[ext_resource type="Script" path="res://ball.gd" id="1_y7h46"]
 [ext_resource type="Script" path="res://paddle_left.gd" id="1_yi06h"]
 [ext_resource type="Script" path="res://paddle_right.gd" id="3_yj0hh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8c1jb"]
+radius = 16.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_32kk5"]
 size = Vector2(21.3333, 133.333)
@@ -25,16 +30,29 @@ b = Vector2(1920, 1080)
 
 [node name="Game" type="Node2D"]
 
+[node name="Ball" type="CharacterBody2D" parent="."]
+script = ExtResource("1_y7h46")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+position = Vector2(960, 544)
+texture = ExtResource("1_ob8rm")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+position = Vector2(960, 544)
+shape = SubResource("CircleShape2D_8c1jb")
+metadata/_edit_group_ = true
+
 [node name="Paddle1" type="CharacterBody2D" parent="."]
-position = Vector2(210, 540)
-scale = Vector2(1.5, 1.8)
+position = Vector2(210, 544)
+scale = Vector2(1.2, 1.8)
 disable_mode = 1
 input_pickable = true
 script = ExtResource("1_yi06h")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Paddle1"]
-position = Vector2(-3.18885e-06, 8.70228e-06)
 scale = Vector2(2.66667, 1.96078)
 texture = ExtResource("1_1oc1r")
 metadata/_edit_group_ = true
@@ -45,8 +63,8 @@ one_way_collision_margin = 0.0
 metadata/_edit_group_ = true
 
 [node name="Paddle2" type="CharacterBody2D" parent="."]
-position = Vector2(1710, 540)
-scale = Vector2(1.5, 1.8)
+position = Vector2(1710, 544)
+scale = Vector2(1.2, 1.8)
 disable_mode = 1
 input_pickable = true
 script = ExtResource("3_yj0hh")
