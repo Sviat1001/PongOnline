@@ -1,11 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://c1ohwwaoriof5"]
+[gd_scene load_steps=17 format=3 uid="uid://c1ohwwaoriof5"]
 
 [ext_resource type="Texture2D" uid="uid://c1htev0wpitr2" path="res://paddle.svg" id="1_1oc1r"]
+[ext_resource type="Script" path="res://game.gd" id="1_exhqm"]
 [ext_resource type="Script" path="res://ball.gd" id="1_y7h46"]
 [ext_resource type="Texture2D" uid="uid://cgy83318viik7" path="res://ball.png" id="2_kncsl"]
 [ext_resource type="AudioStream" uid="uid://b2x8okjx80m12" path="res://paddle.ogg" id="3_oqbku"]
 [ext_resource type="Script" path="res://paddle.gd" id="3_yj0hh"]
 [ext_resource type="AudioStream" uid="uid://8j7w5nitd61r" path="res://wall.ogg" id="4_fpabd"]
+[ext_resource type="AudioStream" uid="uid://4rxjj5smdupd" path="res://score.mp3" id="8_u1bya"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8c1jb"]
 radius = 16.0
@@ -29,18 +31,22 @@ gradient = SubResource("Gradient_op4ot")
 width = 1920
 height = 1080
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_6d04b"]
-a = Vector2(0, 1080)
-
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_ccess"]
 a = Vector2(1920, 0)
 b = Vector2(1920, 1080)
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_6d04b"]
+a = Vector2(0, 1080)
+b = Vector2(0, 0)
+
 [node name="Game" type="Node2D"]
+script = ExtResource("1_exhqm")
 
 [node name="Ball" type="CharacterBody2D" parent="."]
 position = Vector2(960, 540)
 scale = Vector2(1.2, 1.2)
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_y7h46")
 metadata/_edit_group_ = true
 
@@ -53,7 +59,7 @@ metadata/_edit_group_ = true
 shape = SubResource("CircleShape2D_8c1jb")
 metadata/_edit_group_ = true
 
-[node name="Timer" type="Timer" parent="Ball"]
+[node name="TimeOver" type="Timer" parent="Ball"]
 process_callback = 0
 wait_time = 30.0
 one_shot = true
@@ -69,6 +75,8 @@ stream = ExtResource("4_fpabd")
 position = Vector2(105, 540)
 scale = Vector2(1.2, 1.8)
 disable_mode = 1
+collision_layer = 3
+collision_mask = 3
 input_pickable = true
 script = ExtResource("3_yj0hh")
 metadata/_edit_group_ = true
@@ -87,6 +95,8 @@ metadata/_edit_group_ = true
 position = Vector2(1815, 540)
 scale = Vector2(1.2, 1.8)
 disable_mode = 1
+collision_layer = 3
+collision_mask = 3
 input_pickable = true
 script = ExtResource("3_yj0hh")
 metadata/_edit_group_ = true
@@ -103,6 +113,8 @@ one_way_collision_margin = 0.0
 metadata/_edit_group_ = true
 
 [node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 2
 
 [node name="Top" type="CollisionShape2D" parent="Walls"]
 shape = SubResource("SegmentShape2D_fjnlx")
@@ -150,12 +162,35 @@ theme_override_font_sizes/font_size = 144
 text = "0"
 metadata/_edit_use_anchors_ = true
 
-[node name="Goals" type="Area2D" parent="."]
+[node name="Message" type="Label" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_top = 0.281
+anchor_right = 1.0
+anchor_bottom = 0.375
+offset_left = 584.0
+offset_top = 0.519989
+offset_right = -580.0
+offset_bottom = -3.05176e-05
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 73
+text = "Press \"Space\" to start"
+horizontal_alignment = 1
 
-[node name="Left" type="CollisionShape2D" parent="Goals"]
-shape = SubResource("SegmentShape2D_6d04b")
+[node name="Goals" type="Area2D" parent="."]
+metadata/_edit_lock_ = true
 
 [node name="Right" type="CollisionShape2D" parent="Goals"]
 shape = SubResource("SegmentShape2D_ccess")
+metadata/_edit_lock_ = true
 
-[connection signal="timeout" from="Ball/Timer" to="Ball" method="_on_timer_timeout"]
+[node name="Left" type="CollisionShape2D" parent="Goals"]
+shape = SubResource("SegmentShape2D_6d04b")
+metadata/_edit_lock_ = true
+
+[node name="Score" type="AudioStreamPlayer" parent="Goals"]
+stream = ExtResource("8_u1bya")
+
+[connection signal="restart" from="." to="Ball" method="_on_game_restart"]
+[connection signal="timeout" from="Ball/TimeOver" to="Ball" method="_on_timer_timeout"]
+[connection signal="body_shape_entered" from="Goals" to="." method="_on_goals_body_shape_entered"]
