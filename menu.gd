@@ -16,13 +16,11 @@ func _on_play_ai_button_pressed() -> void:
 	get_tree().root.add_child(game)
 	queue_free()
 
-
 func _on_play_button_pressed() -> void:
 	var game = load("res://game.tscn").instantiate()
 	game.AI = false
 	get_tree().root.add_child(game)
 	queue_free()
-
 
 func _on_exit_button_pressed() -> void:
 	get_tree().quit()

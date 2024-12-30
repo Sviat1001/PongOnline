@@ -29,6 +29,9 @@ func _input(event):
 	if event.is_action_pressed("space") and !startFlag:
 		start()
 		startFlag = true
+	if event.is_action_pressed("esc") and !startFlag:
+		queue_free()
+		get_tree().change_scene_to_file("res://menu.tscn")
 
 func _unhandled_input(event):
 	if event.is_action_pressed("esc"):
