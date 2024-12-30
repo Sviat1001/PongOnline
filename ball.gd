@@ -15,7 +15,6 @@ func _physics_process(delta):
 			direction.y = direction.y / 2
 			
 			speed += speed * speedIncrease
-			print(speed)
 			if speed > 4800:
 				speedIncrease = 0
 

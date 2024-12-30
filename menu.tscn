@@ -67,22 +67,41 @@ alignment = 1
 vertical = true
 metadata/_edit_use_anchors_ = true
 
+[node name="PlayAIButton" type="Button" parent="BoxContainer"]
+layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.352941, 0.352941, 0.352941, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_focus_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_pressed_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_hover_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_font_sizes/font_size = 39
+text = "Single Player"
+
 [node name="PlayButton" type="Button" parent="BoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_colors/font_outline_color = Color(0.666569, 0.666569, 0.666569, 1)
-theme_override_colors/icon_focus_color = Color(0.678944, 0.678944, 0.678944, 1)
-theme_override_colors/icon_pressed_color = Color(0.678944, 0.678944, 0.678944, 1)
-theme_override_colors/icon_hover_color = Color(0.678944, 0.678944, 0.678944, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0.678944, 0.678944, 0.678944, 1)
+theme_override_colors/font_disabled_color = Color(0.352941, 0.352941, 0.352941, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_focus_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_pressed_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_hover_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.705882, 0.705882, 0.705882, 1)
 theme_override_font_sizes/font_size = 39
-text = "Start"
+text = "Two Player Mode"
 
 [node name="ExitButton" type="Button" parent="BoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_colors/font_disabled_color = Color(0.352941, 0.352941, 0.352941, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_focus_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_pressed_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_hover_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.705882, 0.705882, 0.705882, 1)
 theme_override_font_sizes/font_size = 40
 text = "Exit"
 
+[connection signal="pressed" from="BoxContainer/PlayAIButton" to="." method="_on_play_ai_button_pressed"]
 [connection signal="pressed" from="BoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="BoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

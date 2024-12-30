@@ -1,5 +1,6 @@
 extends Node2D
 
+var AI
 var score = {'Left': 0, 'Right': 0}
 var sides = {0: "Left", 1: "Right"}
 var center
@@ -8,6 +9,7 @@ signal restart(direction)
 
 func _ready():
 	center = get_viewport().get_visible_rect().size / 2
+	print(AI)
 	
 func start() -> void:
 	score = {'Left': 0, 'Right': 0}
@@ -27,7 +29,8 @@ func _process(_delta):
 		startFlag = true
 		
 	if Input.is_key_pressed(KEY_ESCAPE):
-		get_tree().change_scene_to_file("res://menu.tscn")
+		queue_free()  # Deletes the current game scene
+		get_tree().change_scene_to_file("res://menu.tscn")  # Load the menu scene
 
 func _on_goals_body_shape_entered(_body_rid, body, _body_shape_index, local_shape_index):
 	var side = sides[local_shape_index]
