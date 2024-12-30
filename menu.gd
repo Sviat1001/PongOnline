@@ -4,7 +4,7 @@ var game_scene
 
 func _ready() -> void:    
 	var window = get_window()
-	window.mode = Window.MODE_FULLSCREEN
+	window.mode = Window.MODE_WINDOWED
 	window.position = DisplayServer.screen_get_position()
 	window.size = DisplayServer.screen_get_usable_rect().size
 	window.min_size = Vector2i(800,600)

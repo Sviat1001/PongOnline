@@ -30,7 +30,7 @@ func _physics_process(delta):
 			velocity.y = Input.get_axis("move_up_p%s" % paddle_num, "move_down_p%s" % paddle_num) * SPEED
 			move_and_collide(velocity * delta)
 
-func ai_opponent(delta):
+func ai_opponent(_delta):
 	var ball = get_parent().get_node("Ball")
 	var ball_vel = ball.velocity if "velocity" in ball else Vector2.ZERO
 	

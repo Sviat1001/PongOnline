@@ -199,7 +199,7 @@ metadata/_edit_lock_ = true
 [node name="Victory" type="AudioStreamPlayer2D" parent="Goals"]
 stream = ExtResource("8_bahct")
 
-[node name="Score" type="AudioStreamPlayer" parent="Goals"]
+[node name="Score" type="AudioStreamPlayer2D" parent="Goals"]
 stream = ExtResource("8_u1bya")
 
 [connection signal="restart" from="." to="Ball" method="_on_game_restart"]
