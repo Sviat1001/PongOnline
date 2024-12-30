@@ -1,0 +1,108 @@
+[gd_scene load_steps=2 format=3 uid="uid://wn6d4sfirylb"]
+
+[ext_resource type="Script" path="res://menu.gd" id="1_ee1pb"]
+
+[node name="Menu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ee1pb")
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0392157, 0.0392157, 0.0392157, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.299933
+anchor_top = 0.155696
+anchor_right = 0.700067
+anchor_bottom = 0.700993
+offset_left = 0.127991
+offset_top = -0.152008
+offset_right = -0.128052
+offset_bottom = -0.0720215
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.333333
+anchor_top = 0.118519
+anchor_right = 0.667
+anchor_bottom = 0.244222
+offset_right = -0.640137
+offset_bottom = 0.239975
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 64
+text = "Pong Online"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.333333
+anchor_top = 0.296296
+anchor_right = 0.666667
+anchor_bottom = 0.592593
+theme_override_constants/separation = 25
+alignment = 1
+vertical = true
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayAIButton" type="Button" parent="BoxContainer"]
+layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.352941, 0.352941, 0.352941, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_focus_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_pressed_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_hover_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_font_sizes/font_size = 39
+text = "Single Player"
+
+[node name="PlayButton" type="Button" parent="BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_disabled_color = Color(0.352941, 0.352941, 0.352941, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_focus_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_pressed_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_hover_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_font_sizes/font_size = 39
+text = "Two Player Mode"
+
+[node name="ExitButton" type="Button" parent="BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_disabled_color = Color(0.352941, 0.352941, 0.352941, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_focus_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_pressed_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_hover_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.705882, 0.705882, 0.705882, 1)
+theme_override_font_sizes/font_size = 40
+text = "Exit"
+
+[connection signal="pressed" from="BoxContainer/PlayAIButton" to="." method="_on_play_ai_button_pressed"]
+[connection signal="pressed" from="BoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="BoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

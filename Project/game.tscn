@@ -1,0 +1,208 @@
+[gd_scene load_steps=18 format=3 uid="uid://c1ohwwaoriof5"]
+
+[ext_resource type="Texture2D" uid="uid://c1htev0wpitr2" path="res://paddle.svg" id="1_1oc1r"]
+[ext_resource type="Script" path="res://game.gd" id="1_exhqm"]
+[ext_resource type="Script" path="res://ball.gd" id="1_y7h46"]
+[ext_resource type="Texture2D" uid="uid://cgy83318viik7" path="res://ball.png" id="2_kncsl"]
+[ext_resource type="AudioStream" uid="uid://b2x8okjx80m12" path="res://paddle.ogg" id="3_oqbku"]
+[ext_resource type="Script" path="res://paddle.gd" id="3_yj0hh"]
+[ext_resource type="AudioStream" uid="uid://8j7w5nitd61r" path="res://wall.ogg" id="4_fpabd"]
+[ext_resource type="AudioStream" uid="uid://0e0d24peiwpq" path="res://victory.mp3" id="8_bahct"]
+[ext_resource type="AudioStream" uid="uid://4rxjj5smdupd" path="res://score.mp3" id="8_u1bya"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8c1jb"]
+radius = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_32kk5"]
+size = Vector2(21.3333, 133.333)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_fjnlx"]
+b = Vector2(1920, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_5kdyp"]
+a = Vector2(0, 1080)
+b = Vector2(1920, 1080)
+
+[sub_resource type="Gradient" id="Gradient_op4ot"]
+offsets = PackedFloat32Array(0.902153, 0.998043)
+colors = PackedColorArray(0.0392157, 0.0392157, 0.0392157, 1, 0.0392157, 0.0392157, 0.0392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gwqd3"]
+gradient = SubResource("Gradient_op4ot")
+width = 1920
+height = 1080
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_822xd"]
+size = Vector2(394, 1600)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l0cse"]
+size = Vector2(394, 1600)
+
+[node name="Game" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_exhqm")
+
+[node name="Ball" type="CharacterBody2D" parent="."]
+process_mode = 1
+position = Vector2(960, 540)
+scale = Vector2(1.2, 1.2)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_y7h46")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+scale = Vector2(0.131, 0.131)
+texture = ExtResource("2_kncsl")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_8c1jb")
+metadata/_edit_group_ = true
+
+[node name="TimeOver" type="Timer" parent="Ball"]
+process_callback = 0
+wait_time = 30.0
+one_shot = true
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="Ball"]
+stream = ExtResource("3_oqbku")
+
+[node name="WallHit" type="AudioStreamPlayer2D" parent="Ball"]
+stream = ExtResource("4_fpabd")
+
+[node name="TimeRestart" type="Timer" parent="Ball"]
+one_shot = true
+
+[node name="Paddle1" type="CharacterBody2D" parent="."]
+process_mode = 1
+position = Vector2(105, 540)
+scale = Vector2(1.2, 1.8)
+disable_mode = 1
+collision_layer = 3
+collision_mask = 3
+input_pickable = true
+script = ExtResource("3_yj0hh")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Paddle1"]
+scale = Vector2(2.66667, 1.96078)
+texture = ExtResource("1_1oc1r")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle1"]
+shape = SubResource("RectangleShape2D_32kk5")
+one_way_collision_margin = 0.0
+metadata/_edit_group_ = true
+
+[node name="Paddle2" type="CharacterBody2D" parent="."]
+process_mode = 1
+position = Vector2(1815, 540)
+scale = Vector2(1.2, 1.8)
+disable_mode = 1
+collision_layer = 3
+collision_mask = 3
+input_pickable = true
+script = ExtResource("3_yj0hh")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Paddle2"]
+position = Vector2(-3.18885e-06, 8.70228e-06)
+scale = Vector2(2.66667, 1.96078)
+texture = ExtResource("1_1oc1r")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle2"]
+shape = SubResource("RectangleShape2D_32kk5")
+one_way_collision_margin = 0.0
+metadata/_edit_group_ = true
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="Top" type="CollisionShape2D" parent="Walls"]
+shape = SubResource("SegmentShape2D_fjnlx")
+
+[node name="Bottom" type="CollisionShape2D" parent="Walls"]
+shape = SubResource("SegmentShape2D_5kdyp")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = -1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_gwqd3")
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="ScoreLeft" type="Label" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 704.0
+offset_top = -8.0
+offset_right = -1134.0
+offset_bottom = -891.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 144
+text = "0"
+metadata/_edit_use_anchors_ = true
+
+[node name="ScoreRight" type="Label" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1136.0
+offset_top = -8.0
+offset_right = -702.0
+offset_bottom = -891.0
+theme_override_font_sizes/font_size = 144
+text = "0"
+metadata/_edit_use_anchors_ = true
+
+[node name="Message" type="Label" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_top = 0.281
+anchor_right = 1.0
+anchor_bottom = 0.375
+offset_left = 576.0
+offset_top = 0.519989
+offset_right = -584.0
+offset_bottom = -3.05176e-05
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 73
+text = "Press \"Space\" to start"
+horizontal_alignment = 1
+
+[node name="Goals" type="Area2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Right" type="CollisionShape2D" parent="Goals"]
+position = Vector2(2107, 544)
+shape = SubResource("RectangleShape2D_822xd")
+metadata/_edit_lock_ = true
+
+[node name="Left" type="CollisionShape2D" parent="Goals"]
+position = Vector2(-187, 544)
+shape = SubResource("RectangleShape2D_l0cse")
+metadata/_edit_lock_ = true
+
+[node name="Victory" type="AudioStreamPlayer2D" parent="Goals"]
+stream = ExtResource("8_bahct")
+
+[node name="Score" type="AudioStreamPlayer2D" parent="Goals"]
+stream = ExtResource("8_u1bya")
+
+[connection signal="restart" from="." to="Ball" method="_on_game_restart"]
+[connection signal="timeout" from="Ball/TimeOver" to="Ball" method="_on_timer_timeout"]
+[connection signal="timeout" from="Ball/TimeRestart" to="." method="_on_time_restart_timeout"]
+[connection signal="body_shape_entered" from="Goals" to="." method="_on_goals_body_shape_entered"]
