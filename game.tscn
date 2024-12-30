@@ -39,9 +39,11 @@ size = Vector2(394, 1600)
 size = Vector2(394, 1600)
 
 [node name="Game" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_exhqm")
 
 [node name="Ball" type="CharacterBody2D" parent="."]
+process_mode = 1
 position = Vector2(960, 540)
 scale = Vector2(1.2, 1.2)
 collision_layer = 3
@@ -73,6 +75,7 @@ stream = ExtResource("4_fpabd")
 one_shot = true
 
 [node name="Paddle1" type="CharacterBody2D" parent="."]
+process_mode = 1
 position = Vector2(105, 540)
 scale = Vector2(1.2, 1.8)
 disable_mode = 1
@@ -93,6 +96,7 @@ one_way_collision_margin = 0.0
 metadata/_edit_group_ = true
 
 [node name="Paddle2" type="CharacterBody2D" parent="."]
+process_mode = 1
 position = Vector2(1815, 540)
 scale = Vector2(1.2, 1.8)
 disable_mode = 1
@@ -124,6 +128,7 @@ shape = SubResource("SegmentShape2D_fjnlx")
 shape = SubResource("SegmentShape2D_5kdyp")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
 layer = -1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]

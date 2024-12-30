@@ -3,15 +3,17 @@ extends Node2D
 var AI
 var score = {'Left': 0, 'Right': 0}
 var sides = {0: "Left", 1: "Right"}
+
 var center
+
 var startFlag = false
+
 signal restart(direction)
 
 func _ready():
 	center = get_viewport().get_visible_rect().size / 2
-	print(AI)
 	
-func start() -> void:
+func start():
 	score = {'Left': 0, 'Right': 0}
 	for side in score.keys():
 		update_score(side)
@@ -22,16 +24,26 @@ func start() -> void:
 	$Ball/TimeOver.start(30)
 	$Ball/TimeRestart.start(1)
 	$CanvasLayer/Message.hide()
-	
-func _process(_delta):
-	if Input.is_key_pressed(KEY_SPACE) and !startFlag:
+
+func _input(event):
+	if event.is_action_pressed("space") and !startFlag:
 		start()
 		startFlag = true
-		
-	if Input.is_key_pressed(KEY_ESCAPE):
-		queue_free()  # Deletes the current game scene
-		get_tree().change_scene_to_file("res://menu.tscn")  # Load the menu scene
 
+func _unhandled_input(event):
+	if event.is_action_pressed("esc"):
+		if !get_tree().paused:
+			$CanvasLayer/Message.text = str('The game is paused \nPress "Escape" to exit and "Space" to resume')
+			$CanvasLayer/Message.show()
+			get_tree().paused = !get_tree().paused
+		else:
+			queue_free()
+			get_tree().change_scene_to_file("res://menu.tscn")
+			
+	elif event.is_action_pressed("space") and get_tree().paused:
+		get_tree().paused = !get_tree().paused
+		$CanvasLayer/Message.hide()
+		
 func _on_goals_body_shape_entered(_body_rid, body, _body_shape_index, local_shape_index):
 	var side = sides[local_shape_index]
 	score[side] += 1
@@ -44,8 +56,10 @@ func _on_goals_body_shape_entered(_body_rid, body, _body_shape_index, local_shap
 		
 		$Paddle1.position.y = center.y
 		$Paddle2.position.y = center.y
-		
-		$CanvasLayer/Message.text = str('Player ' + ("1" if side == "Left" else "2") + ' wins \nPress "Escape" to exit and "Space" to restart')
+		if AI == false:
+			$CanvasLayer/Message.text = str('Player ' + ("1" if side == "Left" else "2") + ' wins \nPress "Escape" to exit and "Space" to restart')
+		else:
+			$CanvasLayer/Message.text = str(("Player" if side == "Left" else "CPU") + ' wins \nPress "Escape" to exit and "Space" to restart')
 		$CanvasLayer/Message.show()
 		startFlag = false
 		$Goals/Victory.play()
