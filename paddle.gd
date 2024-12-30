@@ -7,5 +7,6 @@ func _ready():
 	paddle_num = name.replace("Paddle", "")
 	
 func _physics_process(delta):
-	velocity.y = Input.get_axis("move_up_p%s" % paddle_num, "move_down_p%s" % paddle_num) * SPEED
-	move_and_collide(velocity * delta)
+	if get_parent().startFlag == true:
+		velocity.y = Input.get_axis("move_up_p%s" % paddle_num, "move_down_p%s" % paddle_num) * SPEED
+		move_and_collide(velocity * delta)

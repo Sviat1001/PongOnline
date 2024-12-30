@@ -17,6 +17,8 @@ func start() -> void:
 	$Ball.direction = Vector2(((-1) ** randi()), 0)
 	$Ball.speed = 1200.0
 	$Ball.velocity = $Ball.direction * $Ball.speed
+	$Ball/TimeOver.start(30)
+	$Ball/TimeRestart.start(1)
 	$CanvasLayer/Message.hide()
 	
 func _process(_delta):
@@ -26,25 +28,35 @@ func _process(_delta):
 		
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().change_scene_to_file("res://menu.tscn")
-		
-	if score["Left"] == 9 or score["Right"] == 9:
-		$Ball.position = center
-		$Ball.direction = Vector2.ZERO
-		
-		$Paddle1.position.y = center.y
-		$Paddle2.position.y = center.y
-		
-		$CanvasLayer/Message.text = str('Game Over \nPress "Escape" to exit and "Space" to restart')
-		$CanvasLayer/Message.show()
-		startFlag = false
 
-func _on_goals_body_shape_entered(_body_rid, _body, _body_shape_index, local_shape_index):
+func _on_goals_body_shape_entered(_body_rid, body, _body_shape_index, local_shape_index):
 	var side = sides[local_shape_index]
 	score[side] += 1
 	update_score(side)
 	
+	if score[side] == 9:
+		body.position = center
+		body.direction = Vector2.ZERO
+		body.velocity = Vector2.ZERO
+		
+		$Paddle1.position.y = center.y
+		$Paddle2.position.y = center.y
+		
+		$CanvasLayer/Message.text = str('Player ' + ("1" if side == "Left" else "2") + ' wins \nPress "Escape" to exit and "Space" to restart')
+		$CanvasLayer/Message.show()
+		startFlag = false
+		$Goals/Victory.play()
+		return
+
 	emit_signal("restart", Vector2(-1 if side == "Left" else 1, 0))
 	$Goals/Score.play()
 		
 func update_score(side: String):
 	get_node("CanvasLayer/Score%s" % side).text = str(score[side])
+	$CanvasLayer/ScoreLeft.show()
+	$CanvasLayer/ScoreRight.show()
+
+
+func _on_time_restart_timeout() -> void:
+	$CanvasLayer/ScoreLeft.hide()
+	$CanvasLayer/ScoreRight.hide()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c1ohwwaoriof5"]
+[gd_scene load_steps=18 format=3 uid="uid://c1ohwwaoriof5"]
 
 [ext_resource type="Texture2D" uid="uid://c1htev0wpitr2" path="res://paddle.svg" id="1_1oc1r"]
 [ext_resource type="Script" path="res://game.gd" id="1_exhqm"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://b2x8okjx80m12" path="res://paddle.ogg" id="3_oqbku"]
 [ext_resource type="Script" path="res://paddle.gd" id="3_yj0hh"]
 [ext_resource type="AudioStream" uid="uid://8j7w5nitd61r" path="res://wall.ogg" id="4_fpabd"]
+[ext_resource type="AudioStream" uid="uid://0e0d24peiwpq" path="res://victory.mp3" id="8_bahct"]
 [ext_resource type="AudioStream" uid="uid://4rxjj5smdupd" path="res://score.mp3" id="8_u1bya"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8c1jb"]
@@ -31,13 +32,11 @@ gradient = SubResource("Gradient_op4ot")
 width = 1920
 height = 1080
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_ccess"]
-a = Vector2(1920, 0)
-b = Vector2(1920, 1080)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_822xd"]
+size = Vector2(394, 1600)
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_6d04b"]
-a = Vector2(0, 1080)
-b = Vector2(0, 0)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l0cse"]
+size = Vector2(394, 1600)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_exhqm")
@@ -63,13 +62,15 @@ metadata/_edit_group_ = true
 process_callback = 0
 wait_time = 30.0
 one_shot = true
-autostart = true
 
 [node name="Hit" type="AudioStreamPlayer2D" parent="Ball"]
 stream = ExtResource("3_oqbku")
 
 [node name="WallHit" type="AudioStreamPlayer2D" parent="Ball"]
 stream = ExtResource("4_fpabd")
+
+[node name="TimeRestart" type="Timer" parent="Ball"]
+one_shot = true
 
 [node name="Paddle1" type="CharacterBody2D" parent="."]
 position = Vector2(105, 540)
@@ -167,9 +168,9 @@ anchors_preset = -1
 anchor_top = 0.281
 anchor_right = 1.0
 anchor_bottom = 0.375
-offset_left = 584.0
+offset_left = 576.0
 offset_top = 0.519989
-offset_right = -580.0
+offset_right = -584.0
 offset_bottom = -3.05176e-05
 grow_horizontal = 2
 size_flags_horizontal = 4
@@ -181,16 +182,22 @@ horizontal_alignment = 1
 metadata/_edit_lock_ = true
 
 [node name="Right" type="CollisionShape2D" parent="Goals"]
-shape = SubResource("SegmentShape2D_ccess")
+position = Vector2(2107, 544)
+shape = SubResource("RectangleShape2D_822xd")
 metadata/_edit_lock_ = true
 
 [node name="Left" type="CollisionShape2D" parent="Goals"]
-shape = SubResource("SegmentShape2D_6d04b")
+position = Vector2(-187, 544)
+shape = SubResource("RectangleShape2D_l0cse")
 metadata/_edit_lock_ = true
+
+[node name="Victory" type="AudioStreamPlayer2D" parent="Goals"]
+stream = ExtResource("8_bahct")
 
 [node name="Score" type="AudioStreamPlayer" parent="Goals"]
 stream = ExtResource("8_u1bya")
 
 [connection signal="restart" from="." to="Ball" method="_on_game_restart"]
 [connection signal="timeout" from="Ball/TimeOver" to="Ball" method="_on_timer_timeout"]
+[connection signal="timeout" from="Ball/TimeRestart" to="." method="_on_time_restart_timeout"]
 [connection signal="body_shape_entered" from="Goals" to="." method="_on_goals_body_shape_entered"]
