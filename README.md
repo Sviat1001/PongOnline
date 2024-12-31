@@ -29,8 +29,9 @@ it is required to install Godot Engine and the export templates
 2. Donwload Godot Project and export templates;
 3. Open Godot Engine, and open a downloaded project;
 4. After opening a project, in the tab "Project" choose the option "Export...";
-**Note** when exporting for the first time, it is required to install export templates
 5. Choose a platform, and export a project.
+
+**Note** when exporting for the first time, it is required to install export templates
 
 For more information about exporting projects in Godot Engine, click [here](https://docs.godotengine.org/en/stable/tutorials/export/index.html)
 
